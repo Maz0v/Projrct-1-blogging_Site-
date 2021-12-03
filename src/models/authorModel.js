@@ -5,31 +5,31 @@ const authorSchema = new mongoose.Schema(
             "fname":
             {
                   type: String,
-                  require: true
+                  required: true
             },
             "lname":
             {
                   type: String,
-                  require: true
+                  required: true
             },
             "title":
             {
                   type: String,
                   enum: ["Mr", "Mrs", "Miss"],
-                  require: true
+                  required: true
             },
 
             "email":
             {
                   type: String,
-                  require: true,
+                  required: true,
 
                   unique: true
             },
             "password":
             {
                   type: String,
-                  require: true,
+                  required: true,
 
             }
 

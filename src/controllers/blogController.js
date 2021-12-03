@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const authorModel = require("../models/authorModel")
 const blogModel = require("../models/blogModel")
-
+const jwt = require('jsonwebtoken');
 //------------------------1.Create Blog---------------------------------------------------------
 const createBlog = async function (req, res) {
     try {
@@ -98,13 +98,13 @@ const updateBlog = async function (req, res) {
     try {
 
         let validBlog = await blogModel.findById(blogid)
-
+        
 
         if (validBlog) {
             if (req.validToken1.authorId == validBlog.authorId) {
-
+                let abx
                 if (newispublished == true) {
-                    updatedBlogdata.publishedAt = new Date()
+                    updatedBlogdata.publishedAt = new Date();
                     abx = updatedBlogdata.publishedAt
 
                 }
@@ -129,9 +129,10 @@ const updateBlog = async function (req, res) {
 //------------------------4.Delete Blog By Id---------------------------------------------------------
 const deleteBlogbyId = async function (req, res) {
     try {
+       
         if (req.validToken1.authorId == req.query.authorId) {
+            
             let blogId = req.params.blogId
-
 
 
             let deletedBlog = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { isDeleted: true, deletedAt: new Date() })
@@ -140,7 +141,7 @@ const deleteBlogbyId = async function (req, res) {
                 res.status(200).send({ status: true, msg: "Deleted" })
             }
             else {
-                res.status(200).send({ status: false, msg: "Document not found!" })
+                res.status(404).send({ status: false, msg: "Document not found!" })
             }
 
         }
@@ -209,7 +210,7 @@ const loginAuthor = async function (req, res) {
             res.send({ status: true, data: authorDetails, Token: token });
         }
         else {
-            res.send({ status: false, msg: "Invalid credentials!" });
+            res.status(404).send({ status: false, msg: "Invalid credentials!" });
         }
     }
     else {
