@@ -7,11 +7,11 @@ const createAuthor = async function (req, res) {
         const regx = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
         if (regx.test(verifyEmail)) {
             let savedData = await authorModel.create(data)
-            res.send({ msg: savedData })
+            res.status(201).send({ msg: savedData })
 
         }
         else {
-            res.send({ msg: "Invalid email!" });
+            res.status(400).send({ msg: "Invalid email!" });
         }
     }
     catch (error) {

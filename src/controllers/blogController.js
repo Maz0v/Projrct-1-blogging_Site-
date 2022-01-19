@@ -71,7 +71,7 @@ const getFilterBlog = async function (req, res) {
                 return res.status(404).send({ status: false, msg: "The given data is invalid!" })
             }
             else {
-                res.status(201).send({ status: true, data: data })
+                res.status(200).send({ status: true, data: data })
             }
 
         }
