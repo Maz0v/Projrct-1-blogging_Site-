@@ -52,4 +52,4 @@ const blogSchema = new mongoose.Schema(
 
 )
 
-module.exports = mongoose.model('blogModel_29.11.2021', blogSchema)
+module.exports = mongoose.model('blogModel', blogSchema)

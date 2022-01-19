@@ -39,4 +39,4 @@ const authorSchema = new mongoose.Schema(
 
 )
 
-module.exports = mongoose.model('authorModel_29.11.2021', authorSchema)
+module.exports = mongoose.model('authorModel', authorSchema)
