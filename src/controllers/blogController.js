@@ -24,7 +24,7 @@ const createBlog = async function (req, res) {
 
                 }
                 else {
-                    res.status(400).send({ status: false, msg: "No blog with this author Id" })
+                    res.status(400).send({ status: false, msg: "This is not a valid author Id" })
                 }
 
 
@@ -175,14 +175,14 @@ const deleteBlog = async function (req, res) {
                 if (req.query.published) {
                     obj.isPublished = req.query.isPublished
                 }
-                let data = await blogModel.findOne(obj);
+                let data = await blogModel.findOne({obj,isDeleted:false});
                 if (!data) {
-                    return res.status(404).send({ status: false, msg: "The given data is Invalid" });
+                    return res.status(404).send({ status: false, msg: "The given data is Invalid or blog is already deleted" });
                 }
                 data.isDeleted = true;
                 data.deletedAt = new Date();
                 data.save();
-                res.status(200).send({ msg: "succesful", data: data });
+                res.status(200).send({ status: true, msg: "Blog deleted successfully" });
             }
             else {
                 res.status(401).send({ status: false, msg: "Not Authorize" })

@@ -5,7 +5,7 @@ let tokenCheck = function (req, res, next) {
 
     if (token) {
       let validToken = jwt.verify(token, 'Helium')
-    console.log(validToken)
+    
       if (validToken) {
         req.validToken1 = validToken;
         next();
