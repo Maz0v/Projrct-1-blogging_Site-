@@ -97,7 +97,7 @@ const updateBlog = async function (req, res) {
 
     try {
 
-        let validBlog = await blogModel.findById(blogid)
+        let validBlog = await blogModel.findOne({_id:blogid,isDeleted:false})
         
 
         if (validBlog) {
@@ -109,7 +109,7 @@ const updateBlog = async function (req, res) {
 
                 }
 
-                let newBlog = await blogModel.findOneAndUpdate({ _id: blogid, isDeleted: false }, { title: updatedTitle, body: updatedBody, publishedAt: abx, isPublished: newispublished, $push: { subcategory: addSubcategory, tags: addTags } },
+                let newBlog = await blogModel.findOneAndUpdate({ _id: blogid, isDeleted: false }, { title: updatedTitle, body: updatedBody, publishedAt: abx, isPublished: newispublished, $addToSet: { subcategory: addSubcategory, tags: addTags } },
                     { new: true })
 
                 res.status(200).send({ status: true, data: newBlog })
@@ -119,7 +119,7 @@ const updateBlog = async function (req, res) {
             }
         }
         else {
-            res.status(404).send({ status: false, msg: "Blog Id is wrong!" });
+            res.status(404).send({ status: false, msg: "Blog Id is wrong or blog is deleted!" });
         }
     }
     catch (error) {
